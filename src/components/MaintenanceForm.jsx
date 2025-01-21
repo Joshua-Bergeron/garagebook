@@ -80,7 +80,12 @@ function MaintenanceForm({ handleClose }) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Grid container spacing={3} justifyContent="center">
+      <Grid
+        container
+        spacing={3}
+        justifyContent="center"
+        data-testid="maintenance-form"
+      >
         <Grid item xs={12}>
           <Typography
             variant="h5"

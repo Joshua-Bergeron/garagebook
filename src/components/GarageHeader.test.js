@@ -20,10 +20,10 @@ it("calls function on export pdf button click", () => {
 });
 
 it("calls function on new vehicle button click", () => {
-  console.log = jest.fn();
-  render(<GarageHeader />);
+  const handleNewVehicleClick = jest.fn();
+  render(<GarageHeader onNewVehicleClick={handleNewVehicleClick} />);
 
   const newVehicleButton = screen.getByTestId("new-vehicle-button");
   fireEvent.click(newVehicleButton);
-  expect(console.log).toHaveBeenCalledTimes(1);
+  expect(handleNewVehicleClick).toHaveBeenCalledTimes(1);
 });

@@ -91,7 +91,7 @@ it("allows user to type in the notes field", async () => {
 });
 
 it("disables the submit button when no selections are made", async () => {
-  render(<MaintenanceForm />);
+  render(<MaintenanceForm handleClose={console.log} />);
 
   const button = screen.getByTestId("submit-button");
   expect(button).toBeEnabled();
@@ -103,7 +103,7 @@ it("calls function on submit button click", async () => {
   console.log = jest.fn();
   render(
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <MaintenanceForm />
+      <MaintenanceForm handleClose={console.log} />
     </LocalizationProvider>
   );
 

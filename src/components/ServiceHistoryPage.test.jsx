@@ -53,13 +53,13 @@ it("renders all fields", () => {
   });
 });
 
-it("calls function on submit button click", async () => {
-  console.log = jest.fn();
+it("opens the modal when the add maintenance button is clicked", async () => {
   render(
     <ServiceHistoryPage vehicle={corolla} serviceHistory={serviceHistoryMock} />
   );
 
   const button = screen.getByTestId("add-button");
   fireEvent.click(button);
-  expect(console.log).toHaveBeenCalledTimes(1);
+
+  expect(screen.getByTestId("maintenance-form")).toBeInTheDocument();
 });
