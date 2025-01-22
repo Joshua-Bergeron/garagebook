@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Typography,
@@ -36,7 +37,9 @@ const LandingPage = () => {
             color="primary"
             size="large"
             sx={{ marginTop: 2, backgroundColor: "#3c4463" }}
-            endIcon={<ArrowForward />}
+            endIcon={<ArrowForward data-testid="arrow-icon" />}
+            onClick={() => console.log("Button clicked")}
+            data-testid="get-started-button"
           >
             Get Started
           </Button>
@@ -45,7 +48,10 @@ const LandingPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ height: "100%", textAlign: "center" }}>
               <CardContent>
-                <DirectionsCar sx={{ fontSize: 40, color: "#3c4463" }} />
+                <DirectionsCar
+                  sx={{ fontSize: 40, color: "#3c4463" }}
+                  data-testid="car-icon"
+                />
                 <Typography
                   variant="h6"
                   gutterBottom
@@ -62,7 +68,10 @@ const LandingPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ height: "100%", textAlign: "center" }}>
               <CardContent>
-                <Build sx={{ fontSize: 40, color: "#3c4463" }} />
+                <Build
+                  sx={{ fontSize: 40, color: "#3c4463" }}
+                  data-testid="tool-icon"
+                />
                 <Typography
                   variant="h6"
                   gutterBottom
@@ -79,7 +88,10 @@ const LandingPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ height: "100%", textAlign: "center" }}>
               <CardContent>
-                <AttachMoney sx={{ fontSize: 40, color: "#3c4463" }} />
+                <AttachMoney
+                  sx={{ fontSize: 40, color: "#3c4463" }}
+                  data-testid="money-icon"
+                />
                 <Typography
                   variant="h6"
                   gutterBottom
