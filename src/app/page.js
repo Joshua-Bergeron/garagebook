@@ -1,7 +1,6 @@
-import VehicleList from "@/components/VehicleList";
 import * as React from "react";
-import { vehicleList } from "@/mocks/vehicleMocks";
+import LandingPage from "@/components/LandingPage";
 
 export default function Home() {
-  return <VehicleList vehicleList={vehicleList} />;
+  return <LandingPage />;
 }
