@@ -96,4 +96,4 @@ const history = [
   },
 ];
 
-export { users, customers, invoices, revenue, vehicles, history };
+export { users, vehicles, history };
