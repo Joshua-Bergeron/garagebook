@@ -28,7 +28,13 @@ export async function fetchMaintenance(vin) {
     WHERE vehicle_vin = ${vin};
   `;
 
-  return data.rows;
+  return data.rows.map((record) => {
+    const { servicedate, ...rest } = record;
+    return {
+      ...rest,
+      serviceDate: formatDate(servicedate),
+    };
+  });
 }
 
 export async function fetchVehicles(user_id) {
@@ -57,10 +63,28 @@ export async function fetchVehicles(user_id) {
 export async function fetchVehicle(vin) {
   await initializeClient();
   const data = await client.sql`
-    SELECT v.*
+    SELECT v.*,
+           (SELECT MAX(serviceDate) 
+            FROM dbo.maintenance 
+            WHERE vehicle_vin = v.vin) AS lastServiceDate,
+           (SELECT type 
+            FROM dbo.maintenance 
+            WHERE vehicle_vin = v.vin 
+            ORDER BY serviceDate DESC 
+            LIMIT 1) AS lastServiceType
     FROM dbo.vehicles v
     WHERE v.vin = ${vin};
   `;
 
-  return data.rows;
+  if (data.rows.length === 0) {
+    return null;
+  }
+
+  const vehicle = data.rows[0];
+  return {
+    ...vehicle,
+    lastServiceDate: formatDate(vehicle.lastservicedate),
+    lastServiceType: vehicle.lastservicetype,
+    licensePlate: vehicle.license,
+  };
 }

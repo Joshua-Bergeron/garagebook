@@ -27,8 +27,7 @@ const VehicleSummaryItem = ({
 }) => {
   const router = useRouter();
   function handleViewHistoryClick() {
-    console.log(`id: ${id}`);
-    router.push(`/serviceHistory/${id}`);
+    router.push(`/serviceHistory/${vin}`);
   }
 
   function handleSettingsClick() {
