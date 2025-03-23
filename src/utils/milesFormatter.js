@@ -5,7 +5,11 @@
  */
 function milesFormatter(miles) {
   if (typeof miles !== "number") {
-    throw new Error("Miles must be of type number");
+    miles = Number(miles);
+  }
+
+  if (isNaN(miles)) {
+    miles = 0;
   }
 
   let str = miles.toString();

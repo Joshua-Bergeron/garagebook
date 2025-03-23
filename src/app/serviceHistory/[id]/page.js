@@ -1,17 +1,19 @@
-"use client";
+import React from "react";
 import ServiceHistoryPage from "@/components/ServiceHistoryPage";
-import { vehicleList, serviceHistoryMock } from "@/mocks/vehicleMocks";
+import { fetchVehicle, fetchMaintenance } from "@/app/lib/data";
 
-export default function HistoryPage({ params }) {
-  const { id } = params;
+export default async function Page({ params }) {
+  const { id } = await params;
+  const vin = id;
 
-  const vehicle = vehicleList.find((vehicle) => vehicle.id === Number(id));
+  const vehicle = await fetchVehicle(vin);
+  const serviceHistory = await fetchMaintenance(vin);
 
   if (!vehicle) {
     return <div>Vehicle not found</div>;
   }
 
   return (
-    <ServiceHistoryPage vehicle={vehicle} serviceHistory={serviceHistoryMock} />
+    <ServiceHistoryPage vehicle={vehicle} serviceHistory={serviceHistory} />
   );
 }

@@ -1,6 +1,7 @@
 import Garage from "@/components/Garage";
-import { vehicleList } from "@/mocks/vehicleMocks";
+import { fetchVehicles } from "../lib/data";
 
-export default function Page() {
-  return <Garage vehicleList={vehicleList} />;
+export default async function Page() {
+  const vehicles = await fetchVehicles("410544b2-4001-4271-9855-fec4b6a6442a");
+  return <Garage vehicleList={vehicles} />;
 }
