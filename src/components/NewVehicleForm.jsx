@@ -4,10 +4,12 @@ import { useState, useMemo } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { carMakes, carModels, carColors } from "@/mocks/vehicleData";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { calculateYears } from "@/utils/calculateYears";
+import { useRouter } from "next/navigation";
 
 function NewVehicleForm({ onCancel }) {
+  const router = useRouter();
   const years = useMemo(() => calculateYears(), []);
 
   const [vehicleData, setVehicleData] = useState({
@@ -31,7 +33,7 @@ function NewVehicleForm({ onCancel }) {
       errors.mileage = "Mileage is required. No commas.";
     if (!data.licensePlate) errors.licensePlate = "License Plate is required.";
     if (!data.color) errors.color = "Color is required.";
-    if (!data.vin || data.vin.length != 17)
+    if (!data.vin || data.vin.length !== 17)
       errors.vin = "VIN is required and must be 17 characters long.";
     return errors;
   };
@@ -48,15 +50,43 @@ function NewVehicleForm({ onCancel }) {
     }
   };
 
-  function handleSubmit() {
-    console.log("");
+  const handleSubmit = async () => {
     const validationErrors = validateForm(vehicleData);
     setFormErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(vehicleData);
+      try {
+        const response = await fetch("/api/addNewVehicle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+            vehicleData,
+          }),
+        });
+
+        if (response.ok) {
+          setVehicleData({
+            make: null,
+            model: null,
+            year: null,
+            mileage: "",
+            licensePlate: "",
+            color: null,
+            vin: "",
+          });
+          onCancel();
+          window.location.reload();
+        } else {
+          console.error("Failed to add vehicle");
+        }
+      } catch (error) {
+        console.error("Error adding new vehicle:", error);
+      }
     }
-  }
+  };
 
   return (
     <Grid container spacing={3} justifyContent="center">

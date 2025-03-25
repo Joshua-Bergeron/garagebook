@@ -28,13 +28,10 @@ export async function fetchMaintenance(vin) {
     WHERE vehicle_vin = ${vin};
   `;
 
-  return data.rows.map((record) => {
-    const { servicedate, ...rest } = record;
-    return {
-      ...rest,
-      serviceDate: formatDate(servicedate),
-    };
-  });
+  return data.rows.map(({ serviceDate, ...record }) => ({
+    ...record,
+    serviceDate: formatDate(serviceDate),
+  }));
 }
 
 export async function fetchVehicles(user_id) {
@@ -87,4 +84,12 @@ export async function fetchVehicle(vin) {
     lastServiceType: vehicle.lastservicetype,
     licensePlate: vehicle.license,
   };
+}
+
+export async function addNewVehicle(user_id, vehicleData) {
+  await initializeClient();
+  await client.sql`
+    INSERT INTO dbo.vehicles (user_id, make, model, year, mileage, license, color, vin)
+    VALUES (${user_id}, ${vehicleData.make}, ${vehicleData.model}, ${vehicleData.year}, ${vehicleData.mileage}, ${vehicleData.licensePlate}, ${vehicleData.color}, ${vehicleData.vin});
+  `;
 }
