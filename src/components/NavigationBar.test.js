@@ -37,20 +37,6 @@ it("renders all fields", async () => {
   expect(await screen.findByTestId("logout-link")).toBeInTheDocument();
 });
 
-it("calls function when vehicles link is clicked", async () => {
-  console.log = jest.fn();
-  await act(async () => {
-    render(<NavigationBar />);
-  });
-
-  const button = screen.getByTestId("vehicles-link");
-  expect(button).toBeInTheDocument();
-  await act(async () => {
-    fireEvent.click(button);
-  });
-  expect(console.log).toHaveBeenCalledTimes(1);
-});
-
 it("calls function when account link is clicked", async () => {
   console.log = jest.fn();
   await act(async () => {

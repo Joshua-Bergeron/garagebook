@@ -2,15 +2,24 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import NewVehicleForm from "./NewVehicleForm";
+import { useRouter } from "next/navigation";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
+
+useRouter.mockImplementation(() => ({
+  push: jest.fn(),
+}));
+
 it("renders without crashing", () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 });
 
 it("renders all fields", () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   expect(screen.getByTestId("make-combo-box")).toBeInTheDocument();
   expect(screen.getByTestId("model-combo-box")).toBeInTheDocument();
@@ -22,7 +31,7 @@ it("renders all fields", () => {
 });
 
 it("allows user to select from the make field", async () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   expect(screen.queryByText("Toyota")).not.toBeInTheDocument();
   const autocomplete = screen.getByTestId("make-combo-box");
@@ -37,7 +46,7 @@ it("allows user to select from the make field", async () => {
 });
 
 it("allows user to select from the model field", async () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   expect(screen.queryByText("Corolla")).not.toBeInTheDocument();
   const autocomplete = screen.getByTestId("model-combo-box");
@@ -52,7 +61,7 @@ it("allows user to select from the model field", async () => {
 });
 
 it("allows user to select from the year field", async () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   expect(screen.queryByText("2003")).not.toBeInTheDocument();
   const autocomplete = screen.getByTestId("year-combo-box");
@@ -67,7 +76,7 @@ it("allows user to select from the year field", async () => {
 });
 
 it("allows user to type in the mileage field", () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   const input = screen.getByTestId("mileage-field").querySelector("input");
   expect(input).toBeInTheDocument();
@@ -77,7 +86,7 @@ it("allows user to type in the mileage field", () => {
 });
 
 it("allows user to type in the license field", () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   const input = screen.getByTestId("license-field").querySelector("input");
   expect(input).toBeInTheDocument();
@@ -87,7 +96,7 @@ it("allows user to type in the license field", () => {
 });
 
 it("allows user to select from the color field", async () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   expect(screen.queryByText("White")).not.toBeInTheDocument();
   const autocomplete = screen.getByTestId("color-combo-box");
@@ -102,7 +111,7 @@ it("allows user to select from the color field", async () => {
 });
 
 it("disables the submit button when no selections are made", async () => {
-  render(<NewVehicleForm />);
+  render(<NewVehicleForm onCancel={jest.fn()} />);
 
   const button = screen.getByTestId("submit-button");
   expect(button).toBeEnabled();
@@ -110,12 +119,12 @@ it("disables the submit button when no selections are made", async () => {
   expect(button).toBeDisabled();
 });
 
-it("calls function on submit button click", async () => {
-  console.log = jest.fn();
-  render(<NewVehicleForm />);
+it("calls function on cancel button click", async () => {
+  const mockFunction = jest.fn();
+  render(<NewVehicleForm onCancel={mockFunction} />);
 
-  const button = screen.getByTestId("submit-button");
+  const button = screen.getByTestId("cancel-button");
   expect(button).toBeInTheDocument();
   fireEvent.click(button);
-  expect(console.log).toHaveBeenCalledTimes(1);
+  expect(mockFunction).toHaveBeenCalledTimes(1);
 });
