@@ -36,6 +36,7 @@ export async function fetchMaintenance(vin) {
 
 export async function fetchVehicles(user_id) {
   await initializeClient();
+  const timestamp = new Date().getTime();
   const data = await client.sql`
     SELECT v.*, 
            (SELECT MAX(serviceDate) 
@@ -47,7 +48,7 @@ export async function fetchVehicles(user_id) {
             ORDER BY serviceDate DESC 
             LIMIT 1) AS lastServiceType
     FROM dbo.vehicles v
-    WHERE v.user_id = ${user_id};
+    WHERE v.user_id = ${user_id} AND ${timestamp} = ${timestamp};
   `;
 
   return data.rows.map((vehicle) => ({
