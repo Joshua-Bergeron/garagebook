@@ -5,9 +5,10 @@ import VehicleList from "./VehicleList";
 import GarageHeader from "./GarageHeader";
 import NavigationBar from "./NavigationBar";
 import NewVehicleForm from "./NewVehicleForm";
+import { useState } from "react";
 
 function Garage({ vehicleList }) {
-  const [showNewVehicleForm, setShowNewVehicleForm] = React.useState(false);
+  const [showNewVehicleForm, setShowNewVehicleForm] = useState(false);
 
   const handleNewVehicleClick = () => {
     setShowNewVehicleForm(true);

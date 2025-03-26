@@ -32,25 +32,33 @@ export default function ServiceHistory({ serviceHistory }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {serviceHistory.map((row, index) => (
-            <TableRow
-              key={index}
-              sx={{
-                backgroundColor: index % 2 === 0 ? "white" : grey[200],
-              }}
-            >
-              <TableCell component="th" scope="row">
-                {row.type}
+          {serviceHistory.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={6} align="center">
+                No maintenance history records have been added for this vehicle
               </TableCell>
-              <TableCell>{milesFormatter(row.mileage)}</TableCell>
-              <TableCell>
-                {dayjs(row.serviceDate).format("MM/DD/YYYY")}
-              </TableCell>
-              <TableCell>{row.city}</TableCell>
-              <TableCell>{row.state}</TableCell>
-              <TableCell>{row.notes}</TableCell>
             </TableRow>
-          ))}
+          ) : (
+            serviceHistory.map((row, index) => (
+              <TableRow
+                key={index}
+                sx={{
+                  backgroundColor: index % 2 === 0 ? "white" : grey[200],
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.type}
+                </TableCell>
+                <TableCell>{milesFormatter(row.mileage)}</TableCell>
+                <TableCell>
+                  {dayjs(row.serviceDate).format("MM/DD/YYYY")}
+                </TableCell>
+                <TableCell>{row.city}</TableCell>
+                <TableCell>{row.state}</TableCell>
+                <TableCell>{row.notes}</TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </TableContainer>

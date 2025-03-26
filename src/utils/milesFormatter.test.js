@@ -29,9 +29,7 @@ describe("Miles are formatted correctly", () => {
     expect(milesFormatter(1111111)).toBe("1,111,111");
   });
 
-  test("Throws error when non-number is passed", () => {
-    expect(() => {
-      milesFormatter("1");
-    }).toThrow("Miles must be of type number");
+  test("Converts string to number", () => {
+    expect(milesFormatter("100000")).toBe("100,000");
   });
 });

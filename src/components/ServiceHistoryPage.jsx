@@ -14,11 +14,18 @@ import ServiceSummary from "./ServiceSummary";
 import VehicleInformation from "./VehicleInformation";
 import NavigationBar from "./NavigationBar";
 import MaintenanceForm from "./MaintenanceForm";
+import { useState } from "react";
+import { Card, CardContent, Divider } from "@mui/material";
 
 export default function ServiceHistoryPage({ vehicle, serviceHistory }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const latestServiceEntry =
+    serviceHistory.length > 0
+      ? serviceHistory[serviceHistory.length - 1]
+      : null;
 
   return (
     <>
@@ -33,13 +40,15 @@ export default function ServiceHistoryPage({ vehicle, serviceHistory }) {
           vin={vehicle.vin}
         />
 
-        <ServiceSummary
-          lastServiceDate={dayjs(
-            serviceHistory[serviceHistory.length - 1].serviceDate
-          )}
-          lastServiceType={serviceHistory[serviceHistory.length - 1].type}
-          totalServices={serviceHistory.length}
-        />
+        {latestServiceEntry ? (
+          <ServiceSummary
+            lastServiceDate={dayjs(latestServiceEntry.serviceDate)}
+            lastServiceType={latestServiceEntry.type}
+            totalServices={serviceHistory.length}
+          />
+        ) : (
+          <ServiceSummary />
+        )}
         <Button
           variant="contained"
           sx={{

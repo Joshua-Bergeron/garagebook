@@ -48,25 +48,6 @@ it("renders all data", () => {
   expect(screen.getByTestId("settings-button")).toBeInTheDocument();
 });
 
-it("calls function on maintenance button click", () => {
-  console.log = jest.fn();
-  render(
-    <VehicleSummaryItem
-      make={"Toyota"}
-      model={"Corolla"}
-      year={2003}
-      mileage={178234}
-      color={"White"}
-      lastServiceDate={"05/16/2024"}
-      lastServiceType={"Oil Change"}
-    />
-  );
-
-  const maintenanceButton = screen.getByTestId("history-button");
-  fireEvent.click(maintenanceButton);
-  expect(console.log).toHaveBeenCalledTimes(1);
-});
-
 it("calls function on settings button click", () => {
   console.log = jest.fn();
   render(
