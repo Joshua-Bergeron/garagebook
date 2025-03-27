@@ -1,6 +1,7 @@
 import { fetchVehicles } from "@/app/lib/data";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // add this line
+
 export async function GET(req) {
   try {
     // const user_id = req.nextUrl.searchParams.get("user_id");
