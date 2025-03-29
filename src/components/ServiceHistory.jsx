@@ -51,7 +51,7 @@ export default function ServiceHistory({ serviceHistory }) {
                 </TableCell>
                 <TableCell>{milesFormatter(row.mileage)}</TableCell>
                 <TableCell>
-                  {dayjs(row.serviceDate).format("MM/DD/YYYY")}
+                  {dayjs(row.servicedate).format("MM/DD/YYYY")}
                 </TableCell>
                 <TableCell>{row.city}</TableCell>
                 <TableCell>{row.state}</TableCell>
