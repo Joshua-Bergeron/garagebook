@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Typography } from "@mui/material";
 
 function VehicleDetails({ make, model, year, color }) {
   return (

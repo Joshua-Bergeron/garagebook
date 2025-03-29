@@ -91,3 +91,22 @@ export async function addNewVehicle(user_id, vehicleData) {
     VALUES (${user_id}, ${vehicleData.make}, ${vehicleData.model}, ${vehicleData.year}, ${vehicleData.mileage}, ${vehicleData.licensePlate}, ${vehicleData.color}, ${vehicleData.vin});
   `;
 }
+
+export async function addNewMaintenance(vin, maintenanceData) {
+  await initializeClient();
+  const uuid = require("uuid").v4();
+
+  const { type, mileage, serviceDate, city, state, notes } = maintenanceData;
+
+  await client.sql`
+    INSERT INTO dbo.maintenance (id, vehicle_vin, type, mileage, servicedate, city, state, notes)
+    VALUES (${uuid}, ${vin}, ${type}, ${mileage}, ${serviceDate}, ${city}, ${state}, ${notes});
+  `;
+
+  // Update the mileage in the vehicles table if the new mileage is greater
+  await client.sql`
+    UPDATE dbo.vehicles
+    SET mileage = ${mileage}
+    WHERE vin = ${vin} AND mileage < ${mileage};
+  `;
+}

@@ -2,7 +2,7 @@ export const serviceHistoryMock = [
   {
     type: "Oil Change",
     mileage: 123456,
-    serviceDate: "2003-03-20",
+    servicedate: "2003-03-20",
     city: "San Marcos",
     state: "TX",
     notes:
@@ -11,7 +11,7 @@ export const serviceHistoryMock = [
   {
     type: "Tire Rotation",
     mileage: 125000,
-    serviceDate: "2003-06-15",
+    servicedate: "2003-06-15",
     city: "Los Angeles",
     state: "CA",
     notes: "Rotated all four tires to ensure even wear and extend tire life.",
@@ -19,7 +19,7 @@ export const serviceHistoryMock = [
   {
     type: "Brake Inspection",
     mileage: 128000,
-    serviceDate: "2003-09-10",
+    servicedate: "2003-09-10",
     city: "New York City",
     state: "NY",
     notes:
@@ -28,7 +28,7 @@ export const serviceHistoryMock = [
   {
     type: "Battery Replacement",
     mileage: 130500,
-    serviceDate: "2004-01-22",
+    servicedate: "2004-01-22",
     city: "Chicago",
     state: "IL",
     notes:
@@ -37,7 +37,7 @@ export const serviceHistoryMock = [
   {
     type: "Air Filter Change",
     mileage: 132000,
-    serviceDate: "2004-04-05",
+    servicedate: "2004-04-05",
     city: "Miami",
     state: "FL",
     notes:
@@ -46,7 +46,7 @@ export const serviceHistoryMock = [
   {
     type: "Coolant Flush",
     mileage: 135000,
-    serviceDate: "2004-07-19",
+    servicedate: "2004-07-19",
     city: "Atlanta",
     state: "GA",
     notes:
@@ -55,7 +55,7 @@ export const serviceHistoryMock = [
   {
     type: "Transmission Service",
     mileage: 137500,
-    serviceDate: "2004-10-30",
+    servicedate: "2004-10-30",
     city: "Phoenix",
     state: "AZ",
     notes:
@@ -64,7 +64,7 @@ export const serviceHistoryMock = [
   {
     type: "Spark Plug Replacement",
     mileage: 140000,
-    serviceDate: "2005-01-15",
+    servicedate: "2005-01-15",
     city: "Denver",
     state: "CO",
     notes:
@@ -73,7 +73,7 @@ export const serviceHistoryMock = [
   {
     type: "Wiper Blade Replacement",
     mileage: 142000,
-    serviceDate: "2005-04-10",
+    servicedate: "2005-04-10",
     city: "Albuquerque",
     state: "NM",
     notes:
@@ -82,7 +82,7 @@ export const serviceHistoryMock = [
   {
     type: "Wheel Alignment",
     mileage: 145000,
-    serviceDate: "2005-07-25",
+    servicedate: "2005-07-25",
     city: "Seattle",
     state: "WA",
     notes:

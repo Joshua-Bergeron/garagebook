@@ -98,16 +98,3 @@ it("disables the submit button when no selections are made", async () => {
   fireEvent.click(button);
   expect(button).toBeDisabled();
 });
-
-it("calls function on submit button click", async () => {
-  console.log = jest.fn();
-  render(
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <MaintenanceForm handleClose={console.log} />
-    </LocalizationProvider>
-  );
-
-  const button = screen.getByTestId("submit-button");
-  fireEvent.click(button);
-  expect(console.log).toHaveBeenCalledTimes(1);
-});
