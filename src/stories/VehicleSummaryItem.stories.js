@@ -5,6 +5,11 @@ import { corolla, camry } from "@/mocks/vehicleMocks";
 export default {
   title: "Vehicle Summary Item",
   component: VehicleSummaryItem,
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
