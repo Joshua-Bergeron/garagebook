@@ -45,7 +45,7 @@ it("renders all fields", () => {
     expect(screen.getByText(entry.type)).toBeInTheDocument();
     expect(screen.getByText(milesFormatter(entry.mileage))).toBeInTheDocument();
     expect(
-      screen.getByText(dayjs(entry.serviceDate).format("MM/DD/YYYY"))
+      screen.getByText(dayjs(entry.servicedate).format("MM/DD/YYYY"))
     ).toBeInTheDocument();
     expect(screen.getByText(entry.city)).toBeInTheDocument();
     expect(screen.getByText(entry.state)).toBeInTheDocument();

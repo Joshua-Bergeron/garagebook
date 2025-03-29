@@ -8,7 +8,7 @@ import { maintenanceTypes } from "@/mocks/vehicleData";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
 
-function MaintenanceForm({ handleClose }) {
+function MaintenanceForm({ handleClose, vin }) {
   const [maintenanceData, setMaintenanceData] = useState({
     type: null,
     mileage: "",
@@ -68,15 +68,41 @@ function MaintenanceForm({ handleClose }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const validationErrors = validateForm(maintenanceData);
     setFormErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(maintenanceData);
-    }
+      try {
+        const response = await fetch("/api/addNewMaintenance", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            vin: vin,
+            maintenanceData,
+          }),
+        });
 
-    handleClose();
+        if (response.ok) {
+          setMaintenanceData({
+            type: null,
+            mileage: "",
+            serviceDate: "",
+            city: "",
+            state: "",
+            notes: "",
+          });
+          handleClose();
+          window.location.reload();
+        } else {
+          console.error("Failed to submit maintenance data");
+        }
+      } catch (error) {
+        console.error("Failed to submit maintenance data:", error);
+      }
+    }
   };
 
   return (

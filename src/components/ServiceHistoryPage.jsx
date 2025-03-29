@@ -79,7 +79,7 @@ export default function ServiceHistoryPage({ vehicle, serviceHistory }) {
               p: 4,
             }}
           >
-            <MaintenanceForm handleClose={handleClose} />
+            <MaintenanceForm handleClose={handleClose} vin={vehicle.vin} />
           </Box>
         </Modal>
       </Container>

@@ -6,10 +6,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { carMakes, carModels, carColors } from "@/mocks/vehicleData";
 import { Button, Grid } from "@mui/material";
 import { calculateYears } from "@/utils/calculateYears";
-import { useRouter } from "next/navigation";
 
 function NewVehicleForm({ onCancel }) {
-  const router = useRouter();
   const years = useMemo(() => calculateYears(), []);
 
   const [vehicleData, setVehicleData] = useState({
