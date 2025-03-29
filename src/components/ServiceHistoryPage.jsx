@@ -15,7 +15,6 @@ import VehicleInformation from "./VehicleInformation";
 import NavigationBar from "./NavigationBar";
 import MaintenanceForm from "./MaintenanceForm";
 import { useState } from "react";
-import { Card, CardContent, Divider } from "@mui/material";
 
 export default function ServiceHistoryPage({ vehicle, serviceHistory }) {
   const [open, setOpen] = useState(false);
@@ -42,7 +41,7 @@ export default function ServiceHistoryPage({ vehicle, serviceHistory }) {
 
         {latestServiceEntry ? (
           <ServiceSummary
-            lastServiceDate={dayjs(latestServiceEntry.serviceDate)}
+            lastServiceDate={dayjs(latestServiceEntry.servicedate)}
             lastServiceType={latestServiceEntry.type}
             totalServices={serviceHistory.length}
           />

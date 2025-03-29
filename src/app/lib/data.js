@@ -28,10 +28,7 @@ export async function fetchMaintenance(vin) {
     WHERE vehicle_vin = ${vin};
   `;
 
-  return data.rows.map(({ serviceDate, ...record }) => ({
-    ...record,
-    serviceDate: formatDate(serviceDate),
-  }));
+  return data.rows;
 }
 
 export async function fetchVehicles(user_id) {
