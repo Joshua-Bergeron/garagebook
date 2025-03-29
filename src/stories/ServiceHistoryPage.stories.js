@@ -18,3 +18,10 @@ export const History = {
     serviceHistory: serviceHistoryMock,
   },
 };
+
+export const NoHistory = {
+  args: {
+    vehicle: corolla,
+    serviceHistory: [],
+  },
+};
