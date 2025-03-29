@@ -4,6 +4,11 @@ import { vehicleList } from "@/mocks/vehicleMocks";
 export default {
   title: "Vehicle List",
   component: VehicleList,
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 };
 
 export const WithMultipleVehicles = {
