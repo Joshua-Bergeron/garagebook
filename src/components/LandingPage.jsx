@@ -16,8 +16,10 @@ import {
   AttachMoney,
 } from "@mui/icons-material";
 import NavigationBar from "./NavigationBar";
+import { useRouter } from "next/navigation";
 
 const LandingPage = () => {
+  const router = useRouter();
   return (
     <>
       <NavigationBar />
@@ -38,7 +40,7 @@ const LandingPage = () => {
             size="large"
             sx={{ marginTop: 2, backgroundColor: "#3c4463" }}
             endIcon={<ArrowForward data-testid="arrow-icon" />}
-            onClick={() => console.log("Button clicked")}
+            onClick={() => router.push("/login")}
             data-testid="get-started-button"
           >
             Get Started
