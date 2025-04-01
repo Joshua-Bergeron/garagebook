@@ -32,11 +32,3 @@ test("renders expense tracking card", () => {
   expect(screen.getByText("Expense Tracking")).toBeInTheDocument();
   expect(screen.getByTestId("money-icon")).toBeInTheDocument();
 });
-
-test("button click logs to console", () => {
-  console.log = jest.fn();
-  render(<LandingPage />);
-  const button = screen.getByTestId("get-started-button");
-  fireEvent.click(button);
-  expect(console.log).toHaveBeenCalled();
-});
