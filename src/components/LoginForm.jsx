@@ -12,10 +12,19 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function LoginForm({ onSubmit, onCancel }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const handleLogin = () => {
+    console.log("Email:", email, "Password:", password);
+    if (onSubmit) {
+      onSubmit(email, password);
+    }
   };
 
   return (
@@ -33,6 +42,8 @@ function LoginForm({ onSubmit, onCancel }) {
           <TextField
             data-testid="email-input"
             label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             fullWidth
             sx={{ borderRadius: 2 }}
@@ -42,7 +53,9 @@ function LoginForm({ onSubmit, onCancel }) {
           <TextField
             data-testid="password-input"
             label="Password"
-            type={showPassword ? "text" : "password"} // Toggle between text and password
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             fullWidth
             sx={{ borderRadius: 2 }}
@@ -59,13 +72,18 @@ function LoginForm({ onSubmit, onCancel }) {
                 </InputAdornment>
               ),
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
           />
         </Grid>
         <Grid item xs={12} textAlign="center">
           <Button
             variant="contained"
             data-testid="login-button"
-            onClick={onSubmit}
+            onClick={handleLogin}
             sx={{
               width: "100%",
               backgroundColor: "#495057",

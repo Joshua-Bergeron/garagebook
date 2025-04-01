@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import GarageIcon from "@mui/icons-material/Garage";
 import { useRouter } from "next/navigation";
+import ButtonBase from "@mui/material/ButtonBase";
 
 const pages = ["Vehicles"];
 const settings = ["Account", "Logout"];
@@ -52,6 +53,8 @@ function NavigationBar() {
         <Toolbar disableGutters>
           <GarageIcon sx={{ mr: 1 }} data-testid="garage-icon" />
           <Typography
+            component={ButtonBase}
+            onClick={() => router.push("/")}
             variant="h6"
             noWrap
             sx={{
