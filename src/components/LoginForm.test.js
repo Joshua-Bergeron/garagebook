@@ -11,7 +11,7 @@ it("renders without crashing", () => {
   expect(screen.getByTestId("email-input")).toBeInTheDocument();
   expect(screen.getByTestId("password-input")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Log in" })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
+  expect(screen.getByTestId("cancel-button")).toBeInTheDocument();
 });
 
 it("calls function on submit button click", () => {
