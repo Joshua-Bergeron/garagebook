@@ -40,7 +40,7 @@ const LandingPage = () => {
             size="large"
             sx={{ marginTop: 2, backgroundColor: "#3c4463" }}
             endIcon={<ArrowForward data-testid="arrow-icon" />}
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/register")}
             data-testid="get-started-button"
           >
             Get Started
