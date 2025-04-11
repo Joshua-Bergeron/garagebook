@@ -1,17 +1,40 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import LoginPage from "@/components/LoginPage";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+
 export default function Login() {
   const router = useRouter();
+  const [error, setError] = useState("");
+
   const loginUser = async (email, password) => {
-    signIn("credentials", { email, password, redirect: false });
+    setError(""); // Clear previous error message
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result.error) {
+      setError("Invalid email or password. Please try again.");
+      return;
+    }
+
     router.push("/dashboard");
   };
 
   const handleCancel = () => {
     router.push("/");
   };
-  return <LoginPage onSubmit={loginUser} onCancel={handleCancel} />;
+
+  return (
+    <div>
+      <LoginPage
+        onSubmit={loginUser}
+        onCancel={handleCancel}
+        error={error} // Pass error as a prop
+      />
+    </div>
+  );
 }

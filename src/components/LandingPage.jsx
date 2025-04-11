@@ -34,17 +34,43 @@ const LandingPage = () => {
           <Typography variant="h5" gutterBottom>
             Your one-stop solution for managing your garage.
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            sx={{ marginTop: 2, backgroundColor: "#3c4463" }}
-            endIcon={<ArrowForward data-testid="arrow-icon" />}
-            onClick={() => router.push("/register")}
-            data-testid="get-started-button"
+          <Box
+            sx={{
+              marginTop: 2,
+              display: "flex",
+              justifyContent: "center",
+              gap: 2,
+            }}
           >
-            Get Started
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              sx={{ backgroundColor: "#3c4463" }}
+              endIcon={<ArrowForward data-testid="arrow-icon" />}
+              onClick={() => router.push("/register")}
+              data-testid="register-button"
+            >
+              Register
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              sx={{
+                borderColor: "#3c4463",
+                color: "#3c4463",
+                "&:hover": {
+                  backgroundColor: "#f8f9fa",
+                  borderColor: "#3c4463",
+                },
+              }}
+              onClick={() => router.push("/login")}
+              data-testid="login-button"
+            >
+              Login
+            </Button>
+          </Box>
         </Box>
         <Grid container spacing={4} sx={{ marginTop: 4 }}>
           <Grid item xs={12} sm={6} md={4}>
