@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { Box, Container, Modal, Typography, Paper } from "@mui/material";
 import VehicleList from "./VehicleList";
@@ -6,9 +7,19 @@ import GarageHeader from "./GarageHeader";
 import NavigationBar from "./NavigationBar";
 import NewVehicleForm from "./NewVehicleForm";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 function Garage({ vehicleList }) {
   const [showNewVehicleForm, setShowNewVehicleForm] = useState(false);
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (!session) {
+    return <p>You are not logged in.</p>;
+  }
 
   const handleNewVehicleClick = () => {
     setShowNewVehicleForm(true);

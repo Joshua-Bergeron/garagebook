@@ -3,7 +3,7 @@ import LoginForm from "@/components/LoginForm";
 import NavigationBar from "@/components/NavigationBar";
 import { Box, Paper, Typography } from "@mui/material";
 
-export default function LoginPage({ onSubmit, onCancel }) {
+export default function LoginPage({ onSubmit, onCancel, error }) {
   return (
     <>
       <NavigationBar />
@@ -34,7 +34,7 @@ export default function LoginPage({ onSubmit, onCancel }) {
           >
             Sign in to GarageBook
           </Typography>
-          <LoginForm onSubmit={onSubmit} onCancel={onCancel} />
+          <LoginForm onSubmit={onSubmit} onCancel={onCancel} error={error} />
         </Paper>
       </Box>
     </>
