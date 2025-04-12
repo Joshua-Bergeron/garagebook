@@ -24,7 +24,7 @@ export async function fetchMaintenance(vin) {
   await initializeClient();
   const data = await client.sql`
     SELECT *
-    FROM dbo.maintenance
+    FROM public.maintenance
     WHERE vehicle_vin = ${vin};
   `;
 
@@ -37,14 +37,14 @@ export async function fetchVehicles(user_id) {
   const data = await client.sql`
     SELECT v.*, 
            (SELECT MAX(serviceDate) 
-            FROM dbo.maintenance 
+            FROM public.maintenance 
             WHERE vehicle_vin = v.vin) AS lastServiceDate,
            (SELECT type 
-            FROM dbo.maintenance 
+            FROM public.maintenance 
             WHERE vehicle_vin = v.vin 
             ORDER BY serviceDate DESC 
             LIMIT 1) AS lastServiceType
-    FROM dbo.vehicles v
+    FROM public.vehicles v
     WHERE v.user_id = ${user_id};
   `;
 
@@ -60,14 +60,14 @@ export async function fetchVehicle(vin) {
   const data = await client.sql`
     SELECT v.*,
            (SELECT MAX(serviceDate) 
-            FROM dbo.maintenance 
+            FROM public.maintenance 
             WHERE vehicle_vin = v.vin) AS lastServiceDate,
            (SELECT type 
-            FROM dbo.maintenance 
+            FROM public.maintenance 
             WHERE vehicle_vin = v.vin 
             ORDER BY serviceDate DESC 
             LIMIT 1) AS lastServiceType
-    FROM dbo.vehicles v
+    FROM public.vehicles v
     WHERE v.vin = ${vin};
   `;
 
@@ -87,7 +87,7 @@ export async function fetchVehicle(vin) {
 export async function addNewVehicle(user_id, vehicleData) {
   await initializeClient();
   await client.sql`
-    INSERT INTO dbo.vehicles (user_id, make, model, year, mileage, license, color, vin)
+    INSERT INTO public.vehicles (user_id, make, model, year, mileage, license, color, vin)
     VALUES (${user_id}, ${vehicleData.make}, ${vehicleData.model}, ${vehicleData.year}, ${vehicleData.mileage}, ${vehicleData.licensePlate}, ${vehicleData.color}, ${vehicleData.vin});
   `;
 }
@@ -99,13 +99,13 @@ export async function addNewMaintenance(vin, maintenanceData) {
   const { type, mileage, serviceDate, city, state, notes } = maintenanceData;
 
   await client.sql`
-    INSERT INTO dbo.maintenance (id, vehicle_vin, type, mileage, servicedate, city, state, notes)
+    INSERT INTO public.maintenance (id, vehicle_vin, type, mileage, servicedate, city, state, notes)
     VALUES (${uuid}, ${vin}, ${type}, ${mileage}, ${serviceDate}, ${city}, ${state}, ${notes});
   `;
 
   // Update the mileage in the vehicles table if the new mileage is greater
   await client.sql`
-    UPDATE dbo.vehicles
+    UPDATE public.vehicles
     SET mileage = ${mileage}
     WHERE vin = ${vin} AND mileage < ${mileage};
   `;
