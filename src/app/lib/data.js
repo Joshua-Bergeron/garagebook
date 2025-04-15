@@ -110,3 +110,11 @@ export async function addNewMaintenance(vin, maintenanceData) {
     WHERE vin = ${vin} AND mileage < ${mileage};
   `;
 }
+
+export async function deleteVehicle(vin) {
+  await initializeClient();
+  await client.sql`
+    DELETE FROM public.vehicles
+    WHERE vin = ${vin};
+  `;
+}
