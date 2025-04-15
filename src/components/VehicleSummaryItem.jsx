@@ -8,11 +8,15 @@ import {
   Grid,
   Paper,
   Box,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import milesFormatter from "@/utils/milesFormatter";
 import VehicleDetails from "./VehicleDetails";
+import DeleteConfirmationPopup from "./DeleteConfirmationPopup"; // Import the popup component
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const VehicleSummaryItem = ({
   id,
@@ -26,12 +30,48 @@ const VehicleSummaryItem = ({
   vin,
 }) => {
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+
   function handleViewHistoryClick() {
     router.push(`/serviceHistory/${vin}`);
   }
 
-  function handleSettingsClick() {
-    console.log("Settings clicked");
+  function handleSettingsClick(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleCloseSettings() {
+    setAnchorEl(null);
+  }
+
+  function handleDeleteClick() {
+    setAnchorEl(null);
+    setIsDeletePopupOpen(true);
+  }
+
+  async function handleConfirmDelete() {
+    console.log(`Vehicle with VIN ${vin} deleted`);
+    try {
+      const response = await fetch("/api/deleteVehicle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ vin }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+        setIsDeletePopupOpen(false);
+      }
+    } catch (error) {
+      console.error("Failed to delete vehicle", error);
+    }
+  }
+
+  function handleCancelDelete() {
+    setIsDeletePopupOpen(false);
   }
 
   return (
@@ -80,7 +120,22 @@ const VehicleSummaryItem = ({
         >
           <SettingsIcon />
         </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleCloseSettings}
+        >
+          <MenuItem onClick={handleDeleteClick} data-testid="delete-option">
+            Delete Vehicle
+          </MenuItem>
+        </Menu>
       </Box>
+
+      <DeleteConfirmationPopup
+        isOpen={isDeletePopupOpen}
+        onClose={handleCancelDelete}
+        onDelete={handleConfirmDelete}
+      />
     </Paper>
   );
 };
