@@ -20,17 +20,6 @@ function GarageHeader({ onNewVehicleClick }) {
         }}
       >
         <Button
-          variant="outlined"
-          sx={{
-            mr: 1,
-            color: "#3c4463",
-          }}
-          data-testid="export-button"
-          onClick={handleExportClick}
-        >
-          Export PDF
-        </Button>
-        <Button
           variant="contained"
           data-testid="new-vehicle-button"
           onClick={onNewVehicleClick}
