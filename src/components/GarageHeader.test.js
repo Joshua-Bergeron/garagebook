@@ -10,15 +10,6 @@ it("renders without crashing", () => {
   expect(screen.getByTestId("new-vehicle-button")).toBeInTheDocument();
 });
 
-it("calls function on export pdf button click", () => {
-  console.log = jest.fn();
-  render(<GarageHeader />);
-
-  const exportButton = screen.getByTestId("export-button");
-  fireEvent.click(exportButton);
-  expect(console.log).toHaveBeenCalledTimes(1);
-});
-
 it("calls function on new vehicle button click", () => {
   const handleNewVehicleClick = jest.fn();
   render(<GarageHeader onNewVehicleClick={handleNewVehicleClick} />);

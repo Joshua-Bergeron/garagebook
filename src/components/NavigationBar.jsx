@@ -15,13 +15,27 @@ import Menu from "@mui/material/Menu";
 import GarageIcon from "@mui/icons-material/Garage";
 import { useRouter } from "next/navigation";
 import ButtonBase from "@mui/material/ButtonBase";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const pages = ["Vehicles"];
-const settings = ["Account", "Logout"];
+const settings = ["Logout"];
 
 function NavigationBar() {
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
   const router = useRouter();
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const userName = session?.user?.name || "";
+
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase();
+  };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -38,6 +52,7 @@ function NavigationBar() {
       console.log("account");
     } else if (setting === "Logout") {
       console.log("logout");
+      signOut({ callbackUrl: "/" });
     }
   };
 
@@ -68,42 +83,47 @@ function NavigationBar() {
           >
             GarageBook
           </Typography>
+          {isLoggedIn && (
+            <>
+              <Box sx={{ flexGrow: 1, display: "flex" }}>
+                {pages.map((page) => (
+                  <Button
+                    key={page}
+                    data-testid={`${page.toLowerCase()}-link`}
+                    onClick={() => handleNavigate(page)}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
 
-          <Box sx={{ flexGrow: 1, display: "flex" }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                data-testid={`${page.toLowerCase()}-link`}
-                onClick={() => handleNavigate(page)}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar data-testid="avatar-icon" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={anchorElUser}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => handleUserMenuClick(setting)}
-                  data-testid={`${setting.toLowerCase()}-link`}
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar data-testid="avatar-icon">
+                      {getInitials(userName)}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  anchorEl={anchorElUser}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => handleUserMenuClick(setting)}
+                      data-testid={`${setting.toLowerCase()}-link`}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
