@@ -6,8 +6,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { carMakes, carModels, carColors } from "@/mocks/vehicleData";
 import { Button, Grid } from "@mui/material";
 import { calculateYears } from "@/utils/calculateYears";
+import { useSession } from "next-auth/react";
 
 function NewVehicleForm({ onCancel }) {
+  const { data: session } = useSession();
+  const userId = session?.user?.id || null;
   const years = useMemo(() => calculateYears(), []);
 
   const [vehicleData, setVehicleData] = useState({
@@ -51,7 +54,7 @@ function NewVehicleForm({ onCancel }) {
   const handleSubmit = async () => {
     const validationErrors = validateForm(vehicleData);
     setFormErrors(validationErrors);
-
+    console.log(userId);
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await fetch("/api/addNewVehicle", {
@@ -60,7 +63,7 @@ function NewVehicleForm({ onCancel }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+            user_id: userId,
             vehicleData,
           }),
         });

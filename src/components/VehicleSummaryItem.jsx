@@ -10,6 +10,7 @@ import {
   Box,
   Menu,
   MenuItem,
+  CircularProgress,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import milesFormatter from "@/utils/milesFormatter";
@@ -32,8 +33,10 @@ const VehicleSummaryItem = ({
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   function handleViewHistoryClick() {
+    setIsLoading(true); // Set loading state to true
     router.push(`/serviceHistory/${vin}`);
   }
 
@@ -108,9 +111,14 @@ const VehicleSummaryItem = ({
           fullWidth
           data-testid="history-button"
           onClick={handleViewHistoryClick}
+          disabled={isLoading}
           sx={{ flex: 1, mr: 1, backgroundColor: "#3c4463" }}
         >
-          View Service History
+          {isLoading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "View Service History"
+          )}
         </Button>
         <IconButton
           aria-label="settings"

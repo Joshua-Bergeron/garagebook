@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Box, Container, Modal, Typography, Paper } from "@mui/material";
+import {
+  Box,
+  Container,
+  Modal,
+  Typography,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import VehicleList from "./VehicleList";
 import GarageHeader from "./GarageHeader";
 import NavigationBar from "./NavigationBar";
@@ -14,7 +21,20 @@ function Garage({ vehicleList }) {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <NavigationBar />
+        <Box
+          sx={{
+            paddingTop: 8,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </>
+    );
   }
 
   if (!session) {

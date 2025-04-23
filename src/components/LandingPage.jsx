@@ -17,9 +17,12 @@ import {
 } from "@mui/icons-material";
 import NavigationBar from "./NavigationBar";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const LandingPage = () => {
+  const { data: session } = useSession();
   const router = useRouter();
+
   return (
     <>
       <NavigationBar />
@@ -42,34 +45,52 @@ const LandingPage = () => {
               gap: 2,
             }}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              sx={{ backgroundColor: "#3c4463" }}
-              endIcon={<ArrowForward data-testid="arrow-icon" />}
-              onClick={() => router.push("/register")}
-              data-testid="register-button"
-            >
-              Register
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              sx={{
-                borderColor: "#3c4463",
-                color: "#3c4463",
-                "&:hover": {
-                  backgroundColor: "#f8f9fa",
-                  borderColor: "#3c4463",
-                },
-              }}
-              onClick={() => router.push("/login")}
-              data-testid="login-button"
-            >
-              Login
-            </Button>
+            {session ? (
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  sx={{ backgroundColor: "#3c4463" }}
+                  endIcon={<ArrowForward data-testid="arrow-icon" />}
+                  onClick={() => router.push("/dashboard")}
+                  data-testid="dashboard-button"
+                >
+                  Go to Dashboard
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  sx={{ backgroundColor: "#3c4463" }}
+                  endIcon={<ArrowForward data-testid="arrow-icon" />}
+                  onClick={() => router.push("/register")}
+                  data-testid="register-button"
+                >
+                  Register
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  sx={{
+                    borderColor: "#3c4463",
+                    color: "#3c4463",
+                    "&:hover": {
+                      backgroundColor: "#f8f9fa",
+                      borderColor: "#3c4463",
+                    },
+                  }}
+                  onClick={() => router.push("/login")}
+                  data-testid="login-button"
+                >
+                  Login
+                </Button>
+              </>
+            )}
           </Box>
         </Box>
         <Grid container spacing={4} sx={{ marginTop: 4 }}>
