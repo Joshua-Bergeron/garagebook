@@ -23,6 +23,7 @@ export default function LoginPage({ onSubmit, onCancel, error }) {
             width: "100%",
             maxWidth: 360,
             borderRadius: 2,
+            marginTop: 15,
           }}
         >
           <Typography
